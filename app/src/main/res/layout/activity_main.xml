@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+
+    tools:context=".Activity.MainActivity">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="10dp">
+
+        <ImageView
+            android:id="@+id/icont"
+            android:src="@drawable/ic_store_black_24dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+
+            android:id="@+id/AbrirCadastrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/botaocustom"
+            android:layout_marginTop="490dp"
+            android:text="Cadastrar" />
+
+        <Button
+            android:id="@+id/AbrirListar"
+            android:layout_width="match_parent"
+            android:background="@drawable/botaocustom"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/AbrirCadastrar"
+            android:layout_marginTop="2dp"
+            android:text="Listar" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerGastos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp" />
+
+    <TextView
+        android:id="@+id/textVazio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Nenhum gasto neste mês.\nToque no + para adicionar."
+        android:textAlignment="center"
+        android:textColor="@color/textoSecundario"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+</FrameLayout>

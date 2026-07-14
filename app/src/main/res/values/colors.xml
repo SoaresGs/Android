@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#00695C</color>
+    <color name="colorPrimaryDark">#004D40</color>
+    <color name="colorAccent">#FF6D00</color>
+
+    <color name="fundo">#F2F4F5</color>
+    <color name="cardFundo">#FFFFFF</color>
+    <color name="textoPrincipal">#212121</color>
+    <color name="textoSecundario">#757575</color>
+
+    <color name="catFixo">#3F51B5</color>
+    <color name="catVariavel">#009688</color>
+    <color name="catMercado">#4CAF50</color>
+    <color name="catFastFood">#FF9800</color>
+    <color name="catParcela">#E91E63</color>
+    <color name="catOutros">#607D8B</color>
 </resources>

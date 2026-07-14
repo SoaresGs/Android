@@ -13,9 +13,11 @@ import androidx.annotation.Nullable;
  */
 public class DBhelper extends SQLiteOpenHelper {
 
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     public static final String NOME_BANCO = "GestaoFinanceira";
     public static final String TABELA_GASTO = "gasto";
+    public static final String TABELA_RENDA = "renda";
+    public static final String TABELA_ORCAMENTO = "orcamento";
 
     public DBhelper(@Nullable Context context) {
         super(context, NOME_BANCO, null, VERSION);
@@ -23,6 +25,16 @@ public class DBhelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        criarTabelas(db);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Cria apenas as tabelas que ainda não existem, preservando os gastos.
+        criarTabelas(db);
+    }
+
+    private void criarTabelas(SQLiteDatabase db) {
         String tabelaGasto = "CREATE TABLE IF NOT EXISTS " + TABELA_GASTO + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "descricao VARCHAR(255) NOT NULL, "
@@ -32,17 +44,24 @@ public class DBhelper extends SQLiteOpenHelper {
                 + "parcela_total INTEGER DEFAULT 0, "
                 + "mes VARCHAR(7) NOT NULL, "
                 + "data LONG NOT NULL);";
+
+        // Renda mensal informada pelo usuário (uma linha por mês).
+        String tabelaRenda = "CREATE TABLE IF NOT EXISTS " + TABELA_RENDA + " ("
+                + "mes VARCHAR(7) PRIMARY KEY, "
+                + "valor DOUBLE NOT NULL);";
+
+        // Orçamento/limite planejado por categoria (uma linha por categoria).
+        String tabelaOrcamento = "CREATE TABLE IF NOT EXISTS " + TABELA_ORCAMENTO + " ("
+                + "categoria VARCHAR(50) PRIMARY KEY, "
+                + "valor DOUBLE NOT NULL);";
+
         try {
             db.execSQL(tabelaGasto);
-            Log.i("INFO_DB", "Tabela de gastos criada com sucesso");
+            db.execSQL(tabelaRenda);
+            db.execSQL(tabelaOrcamento);
+            Log.i("INFO_DB", "Tabelas criadas com sucesso");
         } catch (Exception e) {
-            Log.e("INFO_DB", "Erro ao criar a tabela: " + e.getMessage());
+            Log.e("INFO_DB", "Erro ao criar as tabelas: " + e.getMessage());
         }
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABELA_GASTO);
-        onCreate(db);
     }
 }

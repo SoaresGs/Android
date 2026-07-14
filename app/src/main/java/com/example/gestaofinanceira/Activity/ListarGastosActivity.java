@@ -1,6 +1,7 @@
 package com.example.gestaofinanceira.Activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class ListarGastosActivity extends AppCompatActivity {
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        editar(position);
                     }
 
                     @Override
@@ -83,6 +85,13 @@ public class ListarGastosActivity extends AppCompatActivity {
         lista.addAll(dao.listarPorMes(mes));
         adapter.notifyDataSetChanged();
         textVazio.setVisibility(lista.isEmpty() ? View.VISIBLE : View.GONE);
+    }
+
+    private void editar(int position) {
+        Gasto gasto = lista.get(position);
+        Intent i = new Intent(this, AdicionarGastoActivity.class);
+        i.putExtra("gasto_id", gasto.getId());
+        startActivity(i);
     }
 
     private void confirmarExclusao(final int position) {

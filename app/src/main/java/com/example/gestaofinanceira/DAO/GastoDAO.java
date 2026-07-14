@@ -72,6 +72,19 @@ public class GastoDAO {
         }
     }
 
+    /** Busca um gasto pelo id, ou null se não encontrado. */
+    public Gasto buscarPorId(int id) {
+        Gasto g = null;
+        Cursor c = le.rawQuery(
+                "SELECT * FROM " + DBhelper.TABELA_GASTO + " WHERE id = ?",
+                new String[]{String.valueOf(id)});
+        if (c.moveToFirst()) {
+            g = montar(c);
+        }
+        c.close();
+        return g;
+    }
+
     /** Lista os gastos de um mês específico ("yyyy-MM"), mais recentes primeiro. */
     public List<Gasto> listarPorMes(String mes) {
         List<Gasto> lista = new ArrayList<>();
@@ -127,6 +140,45 @@ public class GastoDAO {
         }
         c.close();
         return lista;
+    }
+
+    /**
+     * Copia os gastos fixos de um mês de origem para um mês de destino,
+     * ignorando os que já existem no destino (mesma descrição). Útil para
+     * repetir automaticamente as despesas fixas todo mês.
+     *
+     * @return quantidade de gastos fixos copiados.
+     */
+    public int repetirFixos(String mesOrigem, String mesDestino) {
+        int copiados = 0;
+        for (Gasto g : listarPorMes(mesOrigem)) {
+            if (!Gasto.CAT_FIXO.equals(g.getCategoria())) {
+                continue;
+            }
+            if (existeDescricao(mesDestino, g.getDescricao(), Gasto.CAT_FIXO)) {
+                continue;
+            }
+            Gasto novo = new Gasto();
+            novo.setDescricao(g.getDescricao());
+            novo.setValor(g.getValor());
+            novo.setCategoria(Gasto.CAT_FIXO);
+            novo.setMes(mesDestino);
+            novo.setData(System.currentTimeMillis());
+            if (salvar(novo)) {
+                copiados++;
+            }
+        }
+        return copiados;
+    }
+
+    private boolean existeDescricao(String mes, String descricao, String categoria) {
+        Cursor c = le.rawQuery(
+                "SELECT 1 FROM " + DBhelper.TABELA_GASTO
+                        + " WHERE mes = ? AND descricao = ? AND categoria = ? LIMIT 1",
+                new String[]{mes, descricao, categoria});
+        boolean existe = c.moveToFirst();
+        c.close();
+        return existe;
     }
 
     private Gasto montar(Cursor c) {

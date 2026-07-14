@@ -23,6 +23,20 @@
             android:name=".Activity.ListarGastosActivity"
             android:theme="@style/AppTheme.ComActionBar"
             android:parentActivityName=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.OrcamentoActivity"
+            android:theme="@style/AppTheme.ComActionBar"
+            android:parentActivityName=".Activity.MainActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

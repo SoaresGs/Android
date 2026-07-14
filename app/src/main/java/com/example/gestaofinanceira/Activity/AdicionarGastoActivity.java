@@ -18,13 +18,15 @@ import com.example.gestaofinanceira.R;
 import com.example.gestaofinanceira.Util.MoedaUtil;
 
 /**
- * Tela de cadastro de um novo gasto. Quando a categoria é "Parcela",
- * os campos de parcela atual/total são exibidos.
+ * Tela de cadastro/edição de um gasto. Quando a categoria é "Parcela",
+ * os campos de parcela atual/total são exibidos. Se receber o extra
+ * "gasto_id", entra em modo de edição.
  */
 public class AdicionarGastoActivity extends AppCompatActivity {
 
     private GastoDAO dao;
     private String mes;
+    private Gasto emEdicao; // null quando é um novo gasto
 
     private EditText editDescricao;
     private EditText editValor;
@@ -38,15 +40,23 @@ public class AdicionarGastoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_gasto);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Novo gasto");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         dao = new GastoDAO(this);
         mes = getIntent().getStringExtra("mes");
         if (mes == null) {
             mes = MoedaUtil.mesAtual();
+        }
+
+        int gastoId = getIntent().getIntExtra("gasto_id", -1);
+        if (gastoId != -1) {
+            emEdicao = dao.buscarPorId(gastoId);
+            if (emEdicao != null) {
+                mes = emEdicao.getMes();
+            }
+        }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(emEdicao != null ? "Editar gasto" : "Novo gasto");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         editDescricao = findViewById(R.id.editDescricao);
@@ -73,7 +83,27 @@ public class AdicionarGastoActivity extends AppCompatActivity {
             }
         });
 
+        if (emEdicao != null) {
+            preencherCampos(emEdicao);
+            btnSalvar.setText("Salvar alterações");
+        }
+
         btnSalvar.setOnClickListener(v -> salvar());
+    }
+
+    private void preencherCampos(Gasto g) {
+        editDescricao.setText(g.getDescricao());
+        editValor.setText(String.valueOf(g.getValor()));
+        for (int i = 0; i < Gasto.CATEGORIAS.length; i++) {
+            if (Gasto.CATEGORIAS[i].equals(g.getCategoria())) {
+                spinnerCategoria.setSelection(i);
+                break;
+            }
+        }
+        if (g.isParcela()) {
+            editParcelaAtual.setText(String.valueOf(g.getParcelaAtual()));
+            editParcelaTotal.setText(String.valueOf(g.getParcelaTotal()));
+        }
     }
 
     private void salvar() {
@@ -102,12 +132,14 @@ public class AdicionarGastoActivity extends AppCompatActivity {
             return;
         }
 
-        Gasto gasto = new Gasto();
+        Gasto gasto = emEdicao != null ? emEdicao : new Gasto();
         gasto.setDescricao(descricao);
         gasto.setValor(valor);
         gasto.setCategoria(categoria);
         gasto.setMes(mes);
-        gasto.setData(System.currentTimeMillis());
+        if (emEdicao == null) {
+            gasto.setData(System.currentTimeMillis());
+        }
 
         if (Gasto.CAT_PARCELA.equals(categoria)) {
             int atual = parseInt(editParcelaAtual.getText().toString(), 1);
@@ -125,10 +157,15 @@ public class AdicionarGastoActivity extends AppCompatActivity {
             }
             gasto.setParcelaAtual(atual);
             gasto.setParcelaTotal(total);
+        } else {
+            gasto.setParcelaAtual(0);
+            gasto.setParcelaTotal(0);
         }
 
-        if (dao.salvar(gasto)) {
-            Toast.makeText(this, "Gasto salvo!", Toast.LENGTH_SHORT).show();
+        boolean ok = emEdicao != null ? dao.atualizar(gasto) : dao.salvar(gasto);
+        if (ok) {
+            Toast.makeText(this, emEdicao != null ? "Gasto atualizado!" : "Gasto salvo!",
+                    Toast.LENGTH_SHORT).show();
             finish();
         } else {
             Toast.makeText(this, "Erro ao salvar o gasto", Toast.LENGTH_SHORT).show();

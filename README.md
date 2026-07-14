@@ -17,7 +17,17 @@ Aplicativo Android nativo (Java) para controle de gastos pessoais mensais.
 - **Resumo por categoria**: cartões com o total de cada categoria no mês.
 - **Controle de parcelas**: o painel mostra quantas parcelas ainda faltam e o
   valor total a pagar.
-- **Lista de gastos do mês**: com exclusão por toque longo no item.
+- **Lista de gastos do mês**: toque para **editar** e toque longo para **excluir**.
+- **Renda mensal e saldo**: informe sua renda do mês e veja quanto sobra
+  (o saldo fica vermelho quando negativo).
+- **Orçamento por categoria**: defina um limite mensal para cada categoria; o
+  painel mostra uma barra de progresso e alerta **"Estourou!"** ao ultrapassar.
+- **Gráfico de distribuição**: gráfico de rosca (pizza) com a proporção dos
+  gastos por categoria, desenhado nativamente (sem bibliotecas externas).
+- **Repetir gastos fixos**: copia as despesas fixas do mês anterior para o mês
+  atual com um toque, sem duplicar.
+- **Exportar**: gera um arquivo CSV (abre no Excel/Google Planilhas) e permite
+  compartilhar por qualquer app.
 
 Os dados ficam salvos localmente no aparelho (SQLite), sem necessidade de
 internet ou login.
@@ -27,16 +37,23 @@ internet ou login.
 ```
 app/src/main/java/com/example/gestaofinanceira/
 ├── Activity/
-│   ├── MainActivity.java            # painel/dashboard
-│   ├── AdicionarGastoActivity.java  # cadastro de gasto
-│   └── ListarGastosActivity.java    # lista de gastos do mês
-├── Adapter/AdapterGasto.java        # item da lista
-├── DAO/GastoDAO.java                # acesso a dados e agregações
+│   ├── MainActivity.java             # painel/dashboard
+│   ├── AdicionarGastoActivity.java   # cadastro e edição de gasto
+│   ├── ListarGastosActivity.java     # lista de gastos do mês
+│   └── OrcamentoActivity.java        # limites por categoria
+├── Adapter/AdapterGasto.java         # item da lista
+├── DAO/
+│   ├── GastoDAO.java                 # gastos, agregações e repetir fixos
+│   ├── RendaDAO.java                 # renda mensal
+│   └── OrcamentoDAO.java             # orçamento por categoria
 ├── DBhelper/
-│   ├── DBhelper.java                # criação do banco SQLite
+│   ├── DBhelper.java                 # criação do banco SQLite
 │   └── RecyclerItemClickListener.java
-├── Model/Gasto.java                 # modelo de gasto
-└── Util/MoedaUtil.java              # formatação de moeda e meses
+├── Model/Gasto.java                  # modelo de gasto
+├── View/GraficoPizzaView.java        # gráfico de rosca (Canvas)
+└── Util/
+    ├── MoedaUtil.java                # formatação de moeda e meses
+    └── Exportador.java               # exportação CSV
 ```
 
 ## Como compilar

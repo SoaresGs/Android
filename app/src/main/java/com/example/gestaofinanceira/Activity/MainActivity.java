@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
         View btnOrcamento = findViewById(R.id.btnOrcamento);
         View btnRepetirFixos = findViewById(R.id.btnRepetirFixos);
         View btnExportar = findViewById(R.id.btnExportar);
+        View cardValeAPena = findViewById(R.id.cardValeAPena);
+        View cardDecisoes = findViewById(R.id.cardDecisoes);
+        View cardEnvelopes = findViewById(R.id.cardEnvelopes);
 
         btnAnterior.setOnClickListener(v -> {
             mesAtual = MoedaUtil.deslocarMes(mesAtual, -1);
@@ -120,6 +123,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, OrcamentoActivity.class)));
         btnRepetirFixos.setOnClickListener(v -> repetirFixos());
         btnExportar.setOnClickListener(v -> exportar());
+
+        cardValeAPena.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, ValeAPenaActivity.class)));
+        cardDecisoes.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, DecisoesActivity.class)));
+        cardEnvelopes.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, EnvelopesActivity.class)));
     }
 
     @Override

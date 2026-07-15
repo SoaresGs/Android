@@ -15,6 +15,43 @@ public final class MoedaUtil {
     private MoedaUtil() {
     }
 
+    /** Formata uma quantidade de horas como "Xh Ymin" (ex.: 2h 30min). */
+    public static String formatarHoras(double horas) {
+        if (horas <= 0) {
+            return "0h";
+        }
+        int h = (int) horas;
+        int min = (int) Math.round((horas - h) * 60);
+        if (min == 60) {
+            h += 1;
+            min = 0;
+        }
+        if (h == 0) {
+            return min + "min";
+        }
+        return min > 0 ? h + "h " + min + "min" : h + "h";
+    }
+
+    /**
+     * Descreve o custo em tempo de trabalho de forma amigável, incluindo dias
+     * quando o total passa de uma jornada (ex.: "1 dia e 4h de trabalho").
+     */
+    public static String tempoDeTrabalho(double horas, double horasPorDia) {
+        if (horas <= 0) {
+            return "menos de 1 minuto";
+        }
+        if (horasPorDia > 0 && horas >= horasPorDia) {
+            int dias = (int) (horas / horasPorDia);
+            double resto = horas - dias * horasPorDia;
+            String base = dias + (dias == 1 ? " dia" : " dias");
+            if (resto >= 0.1) {
+                return base + " e " + formatarHoras(resto);
+            }
+            return base;
+        }
+        return formatarHoras(horas);
+    }
+
     /** Formata um valor double como moeda brasileira (ex.: R$ 1.234,56). */
     public static String formatar(double valor) {
         return NumberFormat.getCurrencyInstance(BR).format(valor);

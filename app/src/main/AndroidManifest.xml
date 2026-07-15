@@ -31,6 +31,26 @@
             android:exported="false"
             android:theme="@style/AppTheme.ComActionBar"
             android:parentActivityName=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.ValeAPenaActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.ComActionBar"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.DecisoesActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.ComActionBar"
+            android:parentActivityName=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.ConfigTrabalhoActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.ComActionBar"
+            android:parentActivityName=".Activity.ValeAPenaActivity" />
+        <activity
+            android:name=".Activity.EnvelopesActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.ComActionBar"
+            android:parentActivityName=".Activity.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

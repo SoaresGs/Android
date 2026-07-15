@@ -29,6 +29,18 @@ Aplicativo Android nativo (Java) para controle de gastos pessoais mensais.
 - **Exportar**: gera um arquivo CSV (abre no Excel/Google Planilhas) e permite
   compartilhar por qualquer app.
 
+### Consumo consciente (inspirado no TapDin)
+
+- **Vale a pena comprar?**: digite o preço de um item e veja **quanto ele custa
+  em horas de trabalho** — transformando dinheiro em tempo de vida. Usa seu
+  salário (tela "Meu trabalho") para calcular o valor da sua hora.
+- **Sistema de espera**: em vez de comprar por impulso, escolha esperar (1 hora,
+  1, 3 ou 7 dias) e decida com a cabeça fria depois.
+- **Minhas decisões e economia**: histórico de compras avaliadas e o **total
+  economizado** (em dinheiro e em horas do seu tempo) ao decidir não comprar.
+- **Desafio dos 100 Envelopes**: poupança gamificada — marque envelopes de 1 a
+  100 e some **R$ 5.050** ao completar todos.
+
 Os dados ficam salvos localmente no aparelho (SQLite), sem necessidade de
 internet ou login.
 

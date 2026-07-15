@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Usamos seu salário para mostrar quanto cada compra custa em horas do seu trabalho."
+            android:textColor="@color/textoSecundario"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:text="Salário mensal (R$)"
+            android:textColor="@color/textoSecundario"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/editSalario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ex.: 2500,00"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="Horas trabalhadas por mês"
+            android:textColor="@color/textoSecundario"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/editHorasMes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="220"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Dica: 44h por semana ≈ 220h por mês."
+            android:textColor="@color/textoSecundario"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textValorHoraPreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSalvarConfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Salvar"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>
